@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء QR Code</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  canvas {
+    margin-top: 30px;
+    border: 1px solid #333;
+  }
+
+  #download {
+    display: none;
+    margin-top: 20px;
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+
+  #download:hover {
+    background-color: #1e7e34;
+  }
+</style>
+</head>
+<body>
+
+<h1>إنشاء QR Code</h1>
+
+<div class="input-container">
+  <input type="text" id="text" placeholder="أدخل الرابط أو النص هنا">
+  <button onclick="generateQRCode()">إنشاء QR Code</button>
+</div>
+
+<canvas id="qrcode"></canvas>
+<a id="download" href="#" download="qrcode.png">تحميل QR Code</a>
+
+<script>
+  const qr = new QRious({
+    element: document.getElementById('qrcode'),
+    size: 250
+  });
+
+  function generateQRCode() {
+    const text = document.getElementById('text').value.trim();
+    if (!text) {
+      alert('من فضلك أدخل نص أو رابط');
+      return;
+    }
+
+    qr.value = text;
+
+    // رابط التحميل
+    const downloadLink = document.getElementById('download');
+    downloadLink.href = qr.toDataURL();
+    downloadLink.style.display = 'inline-block';
+  }
+</script>
+
+</body>
+</html>
